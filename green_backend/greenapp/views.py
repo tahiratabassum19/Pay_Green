@@ -53,3 +53,38 @@ def login(request):
             return redirect('signup')
 
     return HttpResponse('Invalid request method.')
+
+def calculate_total_score(request):
+    initial_scores = {
+        'food': 0,
+        'transportation': 0,
+        'energy_production': 0,
+        'hobbies': 0
+    }
+
+    # Calculate the carbon usages
+    carbon_use = {
+        'food': 10,  
+        'transportation': 20,  
+        'energy_production': 5,  
+        'hobbies': 15  
+    }
+
+    score_changed = {
+        'food': 0,
+        'transportation': 0,
+        'energy_production': 0,
+        'hobbies': 0
+    }
+
+    for types, carbon_use in carbon_use.items():
+        if carbon_use <= initial_scores[types]:
+            score_changed[types] += 1
+        else:
+            score_changed[types] -= 1
+
+    # Calculating the total score
+    total_score = sum(initial_scores.values()) + sum(score_changed.values())
+
+
+# frontend show part 
